@@ -31,14 +31,14 @@ const images = [
   },
 ];
 
-// Dynamically add images to the carousel
+
 images.forEach((image, index) => {
   const slide = document.createElement("div");
   slide.classList.add("carousel-slide");
   slide.style.backgroundImage = `url(${image.url})`;
   carouselTrack.appendChild(slide);
 
-  // Create navigation indicators
+
   const indicator = document.createElement("div");
   indicator.classList.add("carousel-indicator");
   if (index === 0) indicator.classList.add("active");
@@ -47,40 +47,39 @@ images.forEach((image, index) => {
   carouselNav.appendChild(indicator);
 });
 
-// Function to update the carousel display
+
 function updateCarousel() {
   const slideWidth = document.querySelector(".carousel-slide").offsetWidth;
   carouselTrack.style.transform = `translateX(${-currentIndex * slideWidth}px)`;
   caption.innerText = images[currentIndex].caption;
 
-  // Update active indicator
+
   document.querySelectorAll(".carousel-indicator").forEach((indicator, index) => {
     indicator.classList.toggle("active", index === currentIndex);
   });
 }
 
-// Go to previous slide
 function prevSlide() {
   resetAutoPlay();
   currentIndex = currentIndex === 0 ? images.length - 1 : currentIndex - 1;
   updateCarousel();
 }
 
-// Go to next slide
+
 function nextSlide() {
   resetAutoPlay();
   currentIndex = currentIndex === images.length - 1 ? 0 : currentIndex + 1;
   updateCarousel();
 }
 
-// Go to a specific slide
+
 function goToSlide(index) {
   resetAutoPlay();
   currentIndex = index;
   updateCarousel();
 }
 
-// Auto-play function with countdown timer
+
 let isPlaying = false;
 function toggleAutoPlay() {
   if (isPlaying) {
@@ -95,9 +94,9 @@ function toggleAutoPlay() {
   isPlaying = !isPlaying;
 }
 
-// Countdown function before switching slides
+
 function startCountdown() {
-  clearInterval(countdownInterval); // Clear any existing countdown interval
+  clearInterval(countdownInterval);
   countdown = 3;
   timerDisplay.innerText = `Next slide in ${countdown}...`;
 
@@ -106,14 +105,14 @@ function startCountdown() {
     if (countdown === 0) {
       clearInterval(countdownInterval);
       nextSlide();
-      startCountdown(); // Restart countdown after slide change
+      startCountdown();
     } else {
       timerDisplay.innerText = `Next slide in ${countdown}...`;
     }
   }, 1000);
 }
 
-// Reset auto-play when manually changing slides
+
 function resetAutoPlay() {
   if (isPlaying) {
     clearInterval(countdownInterval);
@@ -121,10 +120,10 @@ function resetAutoPlay() {
   }
 }
 
-// Event listeners
+
 prevButton.addEventListener("click", prevSlide);
 nextButton.addEventListener("click", nextSlide);
 autoPlayButton.addEventListener("click", toggleAutoPlay);
 
-// Initialize carousel
+
 updateCarousel();
